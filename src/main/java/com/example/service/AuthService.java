@@ -19,7 +19,7 @@ import java.util.UUID;
 public class AuthService {
 
     @Autowired
-    private UserRepository userRepository;
+    UserService userService;
 
     @Autowired
     private AuthTokenRepository authTokenRepository;
@@ -33,7 +33,7 @@ public class AuthService {
             throw new RuntimeException("Validation error.");
         }
 
-        User user = userRepository.findByEmail(request.getEmail());
+        User user = userService.findByEmail(request.getEmail());
         if(user != null){
             throw new RuntimeException("User already exists.");
         }
@@ -43,7 +43,7 @@ public class AuthService {
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
 
-        userRepository.save(user);
+        userService.save(user);
     }
 
     public LoginResponse login(LoginRequest request){
@@ -52,7 +52,7 @@ public class AuthService {
             throw new RuntimeException("Email and password cannot be empty.");
         }
 
-        User user = userRepository.findByEmail(request.getEmail());
+        User user = userService.findByEmail(request.getEmail());
 
         if(!request.getPassword().equals(user.getPassword())){
             throw new RuntimeException("Wrong pasword.");
