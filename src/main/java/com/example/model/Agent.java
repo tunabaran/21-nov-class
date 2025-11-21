@@ -1,14 +1,13 @@
 package com.example.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "agents")
 public class Agent {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String type;
