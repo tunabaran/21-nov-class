@@ -1,8 +1,8 @@
-package com.example.model.routes;
+package com.example.demo.model.routes;
 
 
-import com.example.model.AuthToken;
-import com.example.model.User;
+import com.example.demo.model.User;
+import com.example.demo.model.AuthToken;
 
 public class LoginResponse {
 

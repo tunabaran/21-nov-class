@@ -1,10 +1,12 @@
-package com.example.service;
+package com.example.demo.service;
 
-import com.example.model.Agent;
-import com.example.model.routes.CreateAgentRequest;
-import com.example.repository.AgentRepository;
+import com.example.demo.model.Agent;
+import com.example.demo.model.routes.CreateAgentRequest;
+import com.example.demo.repository.AgentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AgentService {
@@ -29,5 +31,13 @@ public class AgentService {
         agentRepository.save(agent);
 
         return agent;
+    }
+
+    public Agent get(long id){
+        Optional<Agent> optionalAgent = agentRepository.findById(id);
+        if(optionalAgent.get() == null){
+            throw new RuntimeException("Agent not found.");
+        }
+        return optionalAgent.get();
     }
 }

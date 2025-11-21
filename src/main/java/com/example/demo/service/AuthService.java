@@ -1,14 +1,12 @@
-package com.example.service;
+package com.example.demo.service;
 
-import com.example.model.AuthToken;
-import com.example.model.User;
-import com.example.model.routes.LoginRequest;
-import com.example.model.routes.LoginResponse;
-import com.example.model.routes.RegisterRequest;
-import com.example.repository.AuthTokenRepository;
-import com.example.repository.UserRepository;
-import com.example.util.DateUtils;
-import org.apache.juli.logging.Log;
+import com.example.demo.model.User;
+import com.example.demo.model.routes.LoginRequest;
+import com.example.demo.model.routes.RegisterRequest;
+import com.example.demo.model.AuthToken;
+import com.example.demo.model.routes.LoginResponse;
+import com.example.demo.repository.AuthTokenRepository;
+import com.example.demo.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,9 @@
-package com.example.controller;
+package com.example.demo.controller;
 
-import com.example.model.routes.LoginRequest;
-import com.example.model.routes.LoginResponse;
-import com.example.model.routes.RegisterRequest;
-import com.example.service.AuthService;
+import com.example.demo.model.routes.LoginRequest;
+import com.example.demo.model.routes.LoginResponse;
+import com.example.demo.model.routes.RegisterRequest;
+import com.example.demo.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
