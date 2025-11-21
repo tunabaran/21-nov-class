@@ -25,4 +25,10 @@ public class AuthController {
     public void register(@RequestBody RegisterRequest request){
         authService.register(request);
     }
+
+    @GetMapping("/check/{token}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void check(@PathVariable String token){
+        authService.check(token);
+    }
 }

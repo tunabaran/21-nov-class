@@ -68,4 +68,11 @@ public class AuthService {
 
         return response;
     }
+
+    public void check(String token){
+        AuthToken authToken = authTokenRepository.findByToken(token);
+        if(!authToken.getExpireDate().after(new Date())){
+            throw new RuntimeException("Expired or invalid token.");
+        }
+    }
 }
