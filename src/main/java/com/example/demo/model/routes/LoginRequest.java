@@ -1,8 +1,15 @@
 package com.example.demo.model.routes;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class LoginRequest {
 
+
+    @NotBlank
     private String email;
+
+    @Size(min = 6)
     private String password;
 
     public String getEmail() {

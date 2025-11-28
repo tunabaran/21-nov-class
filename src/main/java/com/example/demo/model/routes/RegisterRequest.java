@@ -1,9 +1,16 @@
 package com.example.demo.model.routes;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class RegisterRequest {
 
+    @Size(min = 2)
     private String name;
+    @NotBlank
     private String email;
+
+    @NotBlank
     private String password;
 
     public String getName() {

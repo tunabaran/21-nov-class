@@ -23,14 +23,6 @@ public class AuthService {
     private AuthTokenRepository authTokenRepository;
 
     public void register(RegisterRequest request){
-
-        if (request.getEmail() == null || request.getEmail().length() < 6 ||
-                request.getPassword() == null || request.getEmail().length() < 6 ||
-                request.getName() == null || request.getEmail().length() < 3) {
-
-            throw new RuntimeException("Validation error.");
-        }
-
         User user = userService.findByEmail(request.getEmail());
         if(user != null){
             throw new RuntimeException("User already exists.");
@@ -45,11 +37,6 @@ public class AuthService {
     }
 
     public LoginResponse login(LoginRequest request){
-        if(request.getEmail() == null || request.getEmail().length() == 0 ||
-                request.getPassword() == null || request.getPassword().length() == 0){
-            throw new RuntimeException("Email and password cannot be empty.");
-        }
-
         User user = userService.findByEmail(request.getEmail());
 
         if(!request.getPassword().equals(user.getPassword())){
@@ -59,6 +46,7 @@ public class AuthService {
         AuthToken authToken = new AuthToken();
         authToken.setToken(UUID.randomUUID().toString());
         authToken.setExpireDate(DateUtils.addHours(new Date(), 3));
+        authToken.setUserId(user.getId());
 
         authTokenRepository.save(authToken);
 
@@ -69,10 +57,15 @@ public class AuthService {
         return response;
     }
 
-    public void check(String token){
+    public long checkAndReturnUserId(String token){
+        return checkAndReturnAuthToken(token).getUserId();
+    }
+
+    public AuthToken checkAndReturnAuthToken(String token){
         AuthToken authToken = authTokenRepository.findByToken(token);
         if(!authToken.getExpireDate().after(new Date())){
             throw new RuntimeException("Expired or invalid token.");
         }
+        return authToken;
     }
 }

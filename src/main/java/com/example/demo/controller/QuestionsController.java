@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.model.routes.AskAdvancedQuestionRequest;
+import com.example.demo.model.routes.AskAdvancedQuestionResponse;
 import com.example.demo.model.routes.AskSimpleQuestionRequest;
 import com.example.demo.model.routes.AskSimpleQuestionResponse;
 import com.example.demo.service.AuthService;
@@ -22,7 +24,15 @@ public class QuestionsController {
     public AskSimpleQuestionResponse askSimpleQuestion(@RequestBody AskSimpleQuestionRequest request,
                                                        @RequestHeader(name = "xToken") String xToken){
 
-        authService.check(xToken);
+        authService.checkAndReturnAuthToken(xToken);
         return questionsService.askSimple(request);
+    }
+
+    @PostMapping("/ask-advanced")
+    public AskAdvancedQuestionResponse askAdvanceQuestion(@RequestBody AskAdvancedQuestionRequest request,
+                                                          @RequestHeader(name = "xToken") String xToken){
+        request.setUserId(authService.checkAndReturnUserId(xToken));
+
+        return questionsService.askAdvanced(request);
     }
 }

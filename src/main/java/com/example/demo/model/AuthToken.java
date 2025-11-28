@@ -16,6 +16,8 @@ public class AuthToken {
 
     private Date expireDate;
 
+    private long userId;
+
     public long getId() {
         return id;
     }
@@ -38,5 +40,13 @@ public class AuthToken {
 
     public void setExpireDate(Date expireDate) {
         this.expireDate = expireDate;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long user) {
+        this.userId = user;
     }
 }
