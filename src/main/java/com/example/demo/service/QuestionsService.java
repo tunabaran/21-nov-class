@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionsService {
@@ -55,10 +56,15 @@ public class QuestionsService {
         String message = request.getMessage();
 
         User user = userService.findById(userId);
-
+        
+        StringBuilder oldQuestionsMessageBuilder = new StringBuilder();
+        for (Question question : user.getQuestions()) {
+            oldQuestionsMessageBuilder.append(question.getShortMessage());
+        }
+        
         String gptMessage =
-                "Aşağıda paylaştığım metinin çerçevesi içerisinde uygun bir cevap ver \n" +
-                        definition + "\n soru: " + message;
+                "Aşağıda paylaştığım metinin çerçevesi içerisinde uygun bir cevap ver, eğer daha önce sorulan sorular veya cevaplarla alakalı bir soru sorduysam daha önceki soruyuda belirt hatırlat. Sen"  +
+                        definition +" konusunda uzmansın." + "\n soru: " + message + " \n daha önceki sorular : " + oldQuestionsMessageBuilder.toString();
 
         String responseMessage = aiAgent.askQuestion(gptMessage);
 
@@ -72,8 +78,12 @@ public class QuestionsService {
         questionRepository.save(question);
 
         AskAdvancedQuestionResponse response = new AskAdvancedQuestionResponse();
-//        response.setAgent(agent);
-//        response.setResponseMessage(responseMessage);
+        response.setAgent(agent);
+        response.setResponseMessage(responseMessage);
+
+        response.setOldMessages(user.getQuestions().stream()
+                .map(Question::getShortMessage)
+                .collect(Collectors.toList()));
         return response;
     }
 

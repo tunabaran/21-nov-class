@@ -2,10 +2,14 @@ package com.example.demo.model.routes;
 
 import com.example.demo.model.Agent;
 
+import java.util.List;
+
 public class AskAdvancedQuestionResponse {
 
     private Agent agent;
     private String responseMessage;
+
+    private List<String> oldMessages;
 
 
     public Agent getAgent() {
@@ -22,5 +26,13 @@ public class AskAdvancedQuestionResponse {
 
     public void setResponseMessage(String responseMessage) {
         this.responseMessage = responseMessage;
+    }
+
+    public List<String> getOldMessages() {
+        return oldMessages;
+    }
+
+    public void setOldMessages(List<String> oldMessages) {
+        this.oldMessages = oldMessages;
     }
 }
